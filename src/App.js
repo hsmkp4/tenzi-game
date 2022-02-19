@@ -1,17 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Dices from './component/Dices';
 import DUMMY from './data';
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
-  // console.log(datas);
+  const [reset, setReset] = useState(false);
 
   const handleRoll = () => {
     const newData = datas.map((data) =>
       data.isHold
         ? data
-        : { ...data, diceNum: Math.round(Math.random() * 6 + 1) }
+        : { ...data, diceNum: Math.floor(Math.random() * 6 + 1) }
     );
     setDatas(newData);
   };
@@ -22,7 +22,23 @@ function App() {
     );
     setDatas(holdData);
   };
+
+  const handleReset = () => {
+    setReset(false);
+    setDatas(DUMMY);
+  };
+
   console.log(datas);
+  useEffect(() => {
+    const conc1 = datas.every((el) => datas[0].diceNum === el.diceNum);
+    const conc2 = datas.every((el) => el.isHold === true);
+    // console.log(conc1, conc2);
+    if (conc1 && conc2) {
+      setReset(true);
+    }
+  }, [datas]);
+
+  console.log(reset);
 
   return (
     <div className="app">
@@ -36,9 +52,17 @@ function App() {
       <div className="dices">
         {datas && <Dices datas={datas} func={handleHoldDice} />}
       </div>
-      <button className="rollbtn" onClick={handleRoll}>
-        Roll
-      </button>
+
+      {!reset && (
+        <button className="rollbtn" onClick={handleRoll}>
+          Roll
+        </button>
+      )}
+      {reset && (
+        <button className="rollbtn" onClick={handleReset}>
+          Reset
+        </button>
+      )}
     </div>
   );
 }
