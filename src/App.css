@@ -1,38 +1,65 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  margin: 2rem;
+  border: 1px solid black;
+  padding: 1rem;
+  width: 60%;
+  border-radius: 8px;
+}
+
+.header {
+}
+.subheader {
+  text-align: center;
+}
+.dices {
+  display: grid;
+  margin: 1rem;
+  grid-template-columns: 100px 100px 100px 100px 100px;
+  grid-template-rows: 100px 100px;
+  align-items: center;
+  align-content: center;
+}
+.dice {
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid black;
+  margin: 0 0.5rem;
+  padding: 1.5rem 0;
+
+  border-radius: 6px;
+}
+.dice.hold {
+  background-color: orange;
+}
+
+.rollbtn {
+  font-weight: 500;
+  font-size: 1.3rem;
+  font-family: inherit;
+  outline: none;
+  background-color: steelblue;
   color: white;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
-
-.App-link {
-  color: #61dafb;
+.rollbtn:hover {
+  background-color: white;
+  color: steelblue;
+  border: 1px solid black;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.rollbtn:active {
+  background-color: orange;
+  color: white;
 }
