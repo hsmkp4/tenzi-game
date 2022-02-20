@@ -1,6 +1,10 @@
+import { Canvas } from '@react-three/fiber';
 import { useEffect, useState } from 'react';
 import './App.css';
+import Box from './component/Box';
+import Boxes from './component/Boxes';
 import Dices from './component/Dices';
+import Lights from './component/Lights';
 import DUMMY from './data';
 
 function App() {
@@ -28,7 +32,7 @@ function App() {
     setDatas(DUMMY);
   };
 
-  console.log(datas);
+  // console.log(datas);
   useEffect(() => {
     const conc1 = datas.every((el) => datas[0].diceNum === el.diceNum);
     const conc2 = datas.every((el) => el.isHold === true);
@@ -38,31 +42,56 @@ function App() {
     }
   }, [datas]);
 
-  console.log(reset);
+  // console.log(reset);
+
+  //three codes
+
+  const positionLoop = () => {
+    let positions = [];
+    for (let i = 0; i < 10; i++) {
+      const randomPOseBoxX = (Math.random() - 0.5) * 7;
+      const randomPOseBoxY = (Math.random() - 0.5) * 7;
+      const randomPOseBoxZ = (Math.random() - 0.5) * 4;
+      let pose = [randomPOseBoxX, randomPOseBoxY, randomPOseBoxZ];
+      positions.push(pose);
+    }
+    return positions;
+  };
+  console.log(positionLoop());
 
   return (
     <div className="app">
-      <div className="container">
-        <h1 className="header">Tenzi</h1>
-        <h2 className="subheader">
-          Roll untill all dice are the same. Click on each dice to hold it. Good
-          Luck!
-        </h2>
-      </div>
-      <div className="dices">
-        {datas && <Dices datas={datas} func={handleHoldDice} />}
-      </div>
+      {/* <div className="game__data">
+        <div className="container">
+          <h1 className="header">Tenzi</h1>
+          <h2 className="subheader">
+            Roll untill all dice are the same. Click on each dice to hold it.
+            Good Luck!
+          </h2>
+        </div>
+        <div className="dices">
+          {datas && <Dices datas={datas} func={handleHoldDice} />}
+        </div>
 
-      {!reset && (
-        <button className="rollbtn" onClick={handleRoll}>
-          Roll
-        </button>
-      )}
-      {reset && (
-        <button className="rollbtn" onClick={handleReset}>
-          Reset
-        </button>
-      )}
+        {!reset && (
+          <button className="rollbtn" onClick={handleRoll}>
+            Roll
+          </button>
+        )}
+        {reset && (
+          <button className="rollbtn" onClick={handleReset}>
+            Reset
+          </button>
+        )}
+      </div> */}
+      <div className="game__canvas">
+        <Canvas>
+          {positionLoop().map((el, ind) => (
+            <Box pos={el} key={ind} />
+          ))}
+          <Lights />
+        </Canvas>
+      </div>
     </div>
   );
 }

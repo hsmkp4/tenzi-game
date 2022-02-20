@@ -1,4 +1,4 @@
-.app {
+.game__data {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,4 +60,12 @@
 .rollbtn:active {
   background-color: orange;
   color: white;
+}
+
+.game__canvas {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
