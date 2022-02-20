@@ -1,3 +1,4 @@
+import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useEffect, useState } from 'react';
 import './App.css';
@@ -44,7 +45,22 @@ function App() {
 
   // console.log(reset);
 
-  //three codes
+  /**
+   * three codes
+   **/
+
+  const boxPositions = [
+    [1, 1, 1],
+    [3, 2, 0],
+    [0, 2, -1],
+    [-2, -1, -4],
+    [-3, 2, -2],
+    [3, 0, -5],
+    [3, -3, -1],
+    [-1, -2, 1],
+    [-4, -3, -2],
+    [0, 0, 0],
+  ];
 
   const positionLoop = () => {
     let positions = [];
@@ -86,10 +102,11 @@ function App() {
       </div> */}
       <div className="game__canvas">
         <Canvas>
-          {positionLoop().map((el, ind) => (
-            <Box pos={el} key={ind} />
+          {boxPositions.map((el, ind) => (
+            <Box pos={el} key={ind} data={datas[ind]} />
           ))}
           <Lights />
+          <OrbitControls />
         </Canvas>
       </div>
     </div>
