@@ -1,12 +1,16 @@
-import { OrbitControls } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { useEffect, useState } from 'react';
+import { OrbitControls, softShadows } from '@react-three/drei';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
+import BasePlane from './component/BasePlane';
+import Bloom from './component/Bloom';
 import Box from './component/Box';
 import Boxes from './component/Boxes';
 import Dices from './component/Dices';
 import Lights from './component/Lights';
 import DUMMY from './data';
+
+softShadows();
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
@@ -62,18 +66,28 @@ function App() {
     [0, 0, 0],
   ];
 
-  const positionLoop = () => {
-    let positions = [];
-    for (let i = 0; i < 10; i++) {
-      const randomPOseBoxX = (Math.random() - 0.5) * 7;
-      const randomPOseBoxY = (Math.random() - 0.5) * 7;
-      const randomPOseBoxZ = (Math.random() - 0.5) * 4;
-      let pose = [randomPOseBoxX, randomPOseBoxY, randomPOseBoxZ];
-      positions.push(pose);
-    }
-    return positions;
-  };
-  console.log(positionLoop());
+  // const positionLoop = () => {
+  //   let positions = [];
+  //   for (let i = 0; i < 10; i++) {
+  //     const randomPOseBoxX = (Math.random() - 0.5) * 7;
+  //     const randomPOseBoxY = (Math.random() - 0.5) * 7;
+  //     const randomPOseBoxZ = (Math.random() - 0.5) * 4;
+  //     let pose = [randomPOseBoxX, randomPOseBoxY, randomPOseBoxZ];
+  //     positions.push(pose);
+  //   }
+  //   return positions;
+  // };
+  // console.log(positionLoop());
+  function Main({ children }) {
+    const scene = useRef();
+    const { gl, camera } = useThree();
+    useFrame(() => {
+      gl.autoClear = false;
+      gl.clearDepth();
+      gl.render(scene.current, camera);
+    }, 2);
+    return <scene ref={scene}>{children}</scene>;
+  }
 
   return (
     <div className="app">
@@ -101,11 +115,21 @@ function App() {
         )}
       </div> */}
       <div className="game__canvas">
-        <Canvas>
-          {boxPositions.map((el, ind) => (
+        <Canvas shadows>
+          {/* <Main>
+            <Boxes boxPositions={boxPositions} />
+            <Lights />
+          </Main> */}
+          {/* {boxPositions.map((el, ind) => (
             <Box pos={el} key={ind} data={datas[ind]} />
-          ))}
-          <Lights />
+          ))} */}
+          {/* <Box /> */}
+          {/* <BasePlane /> */}
+          <Bloom>
+            <Boxes boxPositions={boxPositions} />
+            {/* <ambientLight /> */}
+            <Lights />
+          </Bloom>
           <OrbitControls />
         </Canvas>
       </div>
