@@ -1,8 +1,9 @@
 import { useFrame } from '@react-three/fiber';
 import React, { useMemo, useRef } from 'react';
 import Box from './Box';
+import Text from './Text';
 
-function Boxes({ boxPositions }) {
+function Boxes({ datas }) {
   const ref = useRef();
   const randomPose = useMemo(() => {
     return new Array(10)
@@ -30,7 +31,13 @@ function Boxes({ boxPositions }) {
       ))} */}
       {/* random position */}
       {randomPose.map((el, i) => (
-        <Box pos={el} key={i} />
+        // <Box pos={el} key={i} />
+        <Text
+          pos={el}
+          key={i}
+          children={`${datas[i].diceNum}`}
+          hAlign="right"
+        />
       ))}
     </group>
   );

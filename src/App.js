@@ -1,6 +1,6 @@
 import { OrbitControls, softShadows } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import './App.css';
 import BasePlane from './component/BasePlane';
 import Bloom from './component/Bloom';
@@ -115,7 +115,7 @@ function App() {
         )}
       </div> */}
       <div className="game__canvas">
-        <Canvas shadows>
+        <Canvas camera={[0, 0, 100]}>
           {/* <Main>
             <Boxes boxPositions={boxPositions} />
             <Lights />
@@ -125,8 +125,11 @@ function App() {
           ))} */}
           {/* <Box /> */}
           {/* <BasePlane /> */}
+
           <Bloom>
-            <Boxes boxPositions={boxPositions} />
+            <Suspense fallback={null}>
+              <Boxes datas={datas} />
+            </Suspense>
             {/* <ambientLight /> */}
             <Lights />
           </Bloom>

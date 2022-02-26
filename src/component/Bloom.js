@@ -32,7 +32,7 @@ function Bloom({ children }) {
         ></renderPass>
         <unrealBloomPass
           attachArray="passes"
-          args={[undefined, 2, 1, -2]}
+          args={[undefined, 0.5, 1, -2]}
         ></unrealBloomPass>
       </effectComposer>
     </>
