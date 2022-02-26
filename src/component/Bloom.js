@@ -1,9 +1,9 @@
-import { extend, useFrame, useThree } from '@react-three/fiber';
-import React, { useEffect, useRef, useState } from 'react';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
-import { Vector3 } from 'three';
+import { extend, useFrame, useThree } from "@react-three/fiber";
+import React, { useEffect, useRef, useState } from "react";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
+import { Vector3 } from "three";
 
 extend({ EffectComposer, UnrealBloomPass, RenderPass });
 
@@ -18,8 +18,8 @@ function Bloom({ children }) {
   );
   useFrame(() => scene && composer.current.render(), 1);
   //   newGl.clearColor(new Vector3(1, 0, 0));
-  newGl.setClearColor('#111', 0.07);
-  console.log(newGl);
+  newGl.setClearColor("#111", 0.07);
+  // console.log(newGl);
 
   return (
     <>

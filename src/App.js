@@ -1,14 +1,14 @@
-import { OrbitControls, softShadows } from '@react-three/drei';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Suspense, useEffect, useRef, useState } from 'react';
-import './App.css';
-import BasePlane from './component/BasePlane';
-import Bloom from './component/Bloom';
-import Box from './component/Box';
-import Boxes from './component/Boxes';
-import Dices from './component/Dices';
-import Lights from './component/Lights';
-import DUMMY from './data';
+import { OrbitControls, softShadows } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Suspense, useEffect, useRef, useState } from "react";
+import "./App.css";
+import BasePlane from "./component/BasePlane";
+import Bloom from "./component/Bloom";
+import Box from "./component/Box";
+import Boxes from "./component/Boxes";
+import Dices from "./component/Dices";
+import Lights from "./component/Lights";
+import DUMMY from "./data";
 
 softShadows();
 

@@ -1,7 +1,7 @@
-import { useFrame } from '@react-three/fiber';
-import React, { useMemo, useRef } from 'react';
-import Box from './Box';
-import Text from './Text';
+import { useFrame } from "@react-three/fiber";
+import React, { useMemo, useRef } from "react";
+import Box from "./Box";
+import Text from "./Text";
 
 function Boxes({ datas }) {
   const ref = useRef();
