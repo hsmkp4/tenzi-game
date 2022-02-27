@@ -37,7 +37,6 @@ function App() {
     setDatas(DUMMY);
   };
 
-  // console.log(datas);
   useEffect(() => {
     const conc1 = datas.every((el) => datas[0].diceNum === el.diceNum);
     const conc2 = datas.every((el) => el.isHold === true);
@@ -46,48 +45,6 @@ function App() {
       setReset(true);
     }
   }, [datas]);
-
-  // console.log(reset);
-
-  /**
-   * three codes
-   **/
-
-  const boxPositions = [
-    [1, 1, 1],
-    [3, 2, 0],
-    [0, 2, -1],
-    [-2, -1, -4],
-    [-3, 2, -2],
-    [3, 0, -5],
-    [3, -3, -1],
-    [-1, -2, 1],
-    [-4, -3, -2],
-    [0, 0, 0],
-  ];
-
-  // const positionLoop = () => {
-  //   let positions = [];
-  //   for (let i = 0; i < 10; i++) {
-  //     const randomPOseBoxX = (Math.random() - 0.5) * 7;
-  //     const randomPOseBoxY = (Math.random() - 0.5) * 7;
-  //     const randomPOseBoxZ = (Math.random() - 0.5) * 4;
-  //     let pose = [randomPOseBoxX, randomPOseBoxY, randomPOseBoxZ];
-  //     positions.push(pose);
-  //   }
-  //   return positions;
-  // };
-  // console.log(positionLoop());
-  function Main({ children }) {
-    const scene = useRef();
-    const { gl, camera } = useThree();
-    useFrame(() => {
-      gl.autoClear = false;
-      gl.clearDepth();
-      gl.render(scene.current, camera);
-    }, 2);
-    return <scene ref={scene}>{children}</scene>;
-  }
 
   return (
     <div className="app">
@@ -116,16 +73,6 @@ function App() {
       </div> */}
       <div className="game__canvas">
         <Canvas camera={[0, 0, 100]}>
-          {/* <Main>
-            <Boxes boxPositions={boxPositions} />
-            <Lights />
-          </Main> */}
-          {/* {boxPositions.map((el, ind) => (
-            <Box pos={el} key={ind} data={datas[ind]} />
-          ))} */}
-          {/* <Box /> */}
-          {/* <BasePlane /> */}
-
           <Bloom>
             <Suspense fallback={null}>
               <Boxes datas={datas} />
