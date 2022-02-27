@@ -1,5 +1,6 @@
 import { OrbitControls, softShadows } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { EffectComposer, Glitch } from "@react-three/postprocessing";
 import { Suspense, useEffect, useRef, useState } from "react";
 import "./App.css";
 import BasePlane from "./component/BasePlane";
@@ -9,12 +10,14 @@ import Boxes from "./component/Boxes";
 import Dices from "./component/Dices";
 import Lights from "./component/Lights";
 import DUMMY from "./data";
+import { GlitchMode } from "postprocessing";
 
 softShadows();
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
   const [reset, setReset] = useState(false);
+  const [glitch, setGlitch] = useState(false);
 
   const handleRoll = () => {
     const newData = datas.map((data) =>
@@ -22,6 +25,7 @@ function App() {
         ? data
         : { ...data, diceNum: Math.floor(Math.random() * 6 + 1) }
     );
+    setGlitch(true);
     setDatas(newData);
   };
 
@@ -46,7 +50,14 @@ function App() {
     }
   }, [datas]);
 
+  useEffect(() => {
+    const timeOut = setTimeout(() => setGlitch(false), 200);
+
+    return () => clearTimeout(timeOut);
+  });
   console.log(datas);
+  console.log(glitch);
+  console.log(GlitchMode);
 
   return (
     <div className="app">
@@ -75,13 +86,26 @@ function App() {
       </div> */}
       <div className="game__canvas">
         <Canvas camera={[0, 0, 100]}>
-          <Bloom>
-            <Suspense fallback={null}>
+          <Suspense fallback={null}>
+            <Bloom>
               <Boxes datas={datas} handleHoldDice={handleHoldDice} />
-            </Suspense>
-            <Lights />
-          </Bloom>
-          <OrbitControls />
+
+              <Lights />
+            </Bloom>
+            <OrbitControls />
+            {glitch && (
+              <EffectComposer>
+                <Glitch
+                  delay={[0, 0]}
+                  duration={[0.0, 0.4]}
+                  // mode={GlitchMode.DISABLED}
+                  active
+                  strength={[0.1, 0.6]}
+                  // ratio={1}
+                />
+              </EffectComposer>
+            )}
+          </Suspense>
         </Canvas>
       </div>
       {!reset && (
