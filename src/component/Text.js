@@ -1,5 +1,11 @@
 import * as THREE from "three";
-import React, { useMemo, useRef, useLayoutEffect, useState } from "react";
+import React, {
+  useMemo,
+  useRef,
+  useLayoutEffect,
+  useState,
+  useEffect,
+} from "react";
 import { extend, useFrame, useLoader } from "@react-three/fiber";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
@@ -15,6 +21,9 @@ export default function Text({
   size = 1.5,
   color = "#000000",
   pos,
+  handleHoldDice,
+  data,
+
   ...props
 }) {
   //functionality and animate
@@ -29,12 +38,13 @@ export default function Text({
 
   const handleIsHold = () => {
     setIsHold((pre) => !pre);
+    handleHoldDice(data.id);
   };
 
   const randomNum = useMemo(() => 0.5 + Math.random(), []);
 
   const obj = useSpring({
-    scale: isHold ? 1.2 : 1,
+    scale: data.isHold ? 1.2 : 1,
   });
 
   //
@@ -71,7 +81,7 @@ export default function Text({
 
     const t = upDownMove((1 + Math.sin(elapsed * randomNum)) / 2);
 
-    if (!isHold) {
+    if (!data.isHold) {
       textG.current.rotation.y = Math.sin(elapsed * randomNum);
       textG.current.rotation.z = Math.cos(elapsed * randomNum * 2);
 
@@ -87,15 +97,15 @@ export default function Text({
       ref={textG}
     >
       <a.mesh
-        ref={mesh}
         onPointerOver={handleHover}
         onPointerOut={handleHover}
         onClick={handleIsHold}
         scale={obj.scale}
+        ref={mesh}
       >
         <textGeometry args={[children, config]} />
         <meshStandardMaterial
-          color={isHold ? "orange" : isHover ? "red" : "steelblue"}
+          color={data.isHold ? "orange" : isHover ? "red" : "steelblue"}
           metalness={0.4}
           roughness={0.1}
         />

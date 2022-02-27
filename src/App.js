@@ -46,6 +46,8 @@ function App() {
     }
   }, [datas]);
 
+  console.log(datas);
+
   return (
     <div className="app">
       {/* <div className="game__data">
@@ -75,14 +77,23 @@ function App() {
         <Canvas camera={[0, 0, 100]}>
           <Bloom>
             <Suspense fallback={null}>
-              <Boxes datas={datas} />
+              <Boxes datas={datas} handleHoldDice={handleHoldDice} />
             </Suspense>
-            {/* <ambientLight /> */}
             <Lights />
           </Bloom>
           <OrbitControls />
         </Canvas>
       </div>
+      {!reset && (
+        <button className="btn rollbtn" onClick={handleRoll}>
+          Roll it
+        </button>
+      )}
+      {reset && (
+        <button className="btn rollbtn" onClick={handleReset}>
+          Reset it
+        </button>
+      )}
     </div>
   );
 }

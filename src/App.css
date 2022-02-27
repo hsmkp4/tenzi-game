@@ -72,3 +72,9 @@
   top: 0;
   left: 0;
 }
+
+.btn {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+}

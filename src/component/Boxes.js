@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import React, { useMemo, useRef } from "react";
 import Text from "./Text";
 
-function Boxes({ datas }) {
+function Boxes({ datas, handleHoldDice }) {
   const ref = useRef();
   const randomPose = useMemo(() => {
     return new Array(10)
@@ -13,7 +13,7 @@ function Boxes({ datas }) {
         (Math.random() - 0.5) * 4,
       ]);
   }, []);
-  console.log(randomPose);
+  // console.log(randomPose);
   useFrame(({ clock }) => {
     const elapsed = clock.getElapsedTime();
   });
@@ -25,6 +25,8 @@ function Boxes({ datas }) {
           key={i}
           children={`${datas[i].diceNum}`}
           hAlign="right"
+          handleHoldDice={handleHoldDice}
+          data={datas[i]}
         />
       ))}
     </group>
