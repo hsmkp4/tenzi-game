@@ -18,7 +18,7 @@ function Bloom({ children }) {
   );
   useFrame(() => scene && composer.current.render(), 1);
 
-  newGl.setClearColor("#111", 0.07);
+  newGl.setClearColor("#222", 0.07);
 
   return (
     <>

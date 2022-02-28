@@ -1,23 +1,26 @@
-import { OrbitControls, softShadows } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { EffectComposer, Glitch } from "@react-three/postprocessing";
 import { Suspense, useEffect, useRef, useState } from "react";
 import "./App.css";
-import BasePlane from "./component/BasePlane";
 import Bloom from "./component/Bloom";
-import Box from "./component/Box";
 import Boxes from "./component/Boxes";
-import Dices from "./component/Dices";
 import Lights from "./component/Lights";
 import DUMMY from "./data";
 import { GlitchMode } from "postprocessing";
-
-softShadows();
+import { useSpring, a } from "@react-spring/three";
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
   const [reset, setReset] = useState(false);
   const [glitch, setGlitch] = useState(false);
+  const [isStart, setIsStart] = useState(false);
+
+  // const { startContainer } = useSpring(() => ({
+  //   startContainer: isStart ? "display: none" : "display: block",
+  // }));
+
+  const spr = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
 
   const handleRoll = () => {
     const newData = datas.map((data) =>
@@ -55,65 +58,66 @@ function App() {
 
     return () => clearTimeout(timeOut);
   });
-  console.log(datas);
-  console.log(glitch);
-  console.log(GlitchMode);
+
+  // console.log(datas);
+  // console.log(glitch);
+  // console.log(GlitchMode);
+  console.log(isStart);
 
   return (
     <div className="app">
-      {/* <div className="game__data">
-        <div className="container">
-          <h1 className="header">Tenzi</h1>
-          <h2 className="subheader">
-            Roll untill all dice are the same. Click on each dice to hold it.
-            Good Luck!
-          </h2>
-        </div>
-        <div className="dices">
-          {datas && <Dices datas={datas} func={handleHoldDice} />}
-        </div>
-
-        {!reset && (
-          <button className="rollbtn" onClick={handleRoll}>
-            Roll
+      {!isStart && (
+        <div className="game__data">
+          <div className="container">
+            <h1 className="header">Tenzi</h1>
+            <h2 className="subheader">
+              Roll untill all dice are the same. Click on each dice to hold it.
+              Good Luck!
+            </h2>
+          </div>
+          <button className="rollbtn" onClick={() => setIsStart(true)}>
+            Lets Go!!
           </button>
-        )}
-        {reset && (
-          <button className="rollbtn" onClick={handleReset}>
-            Reset
-          </button>
-        )}
-      </div> */}
-      <div className="game__canvas">
-        <Canvas camera={[0, 0, 100]}>
-          <Suspense fallback={null}>
-            <Bloom>
-              <Boxes datas={datas} handleHoldDice={handleHoldDice} />
-
-              <Lights />
-            </Bloom>
-            <OrbitControls />
-            {glitch && (
-              <EffectComposer>
-                <Glitch
-                  delay={[0, 0]}
-                  duration={[0.0, 0.4]}
-                  // mode={GlitchMode.DISABLED}
-                  active
-                  strength={[0.1, 0.6]}
-                  // ratio={1}
+        </div>
+      )}
+      {isStart && (
+        <div className="game__canvas">
+          <Canvas camera={[0, 0, 100]}>
+            <Suspense fallback={null}>
+              <Bloom>
+                <Boxes
+                  datas={datas}
+                  handleHoldDice={handleHoldDice}
+                  isStart={isStart}
                 />
-              </EffectComposer>
-            )}
-          </Suspense>
-        </Canvas>
-      </div>
-      {!reset && (
+
+                <Lights />
+              </Bloom>
+              <OrbitControls />
+              {glitch && (
+                <EffectComposer>
+                  <Glitch
+                    delay={[0, 0]}
+                    duration={[0.0, 0.4]}
+                    // dtSize={256}
+                    columns={0.01}
+                    mode={GlitchMode.CONSTANT_WILD}
+                    active
+                    strength={[0.1, 0.9]}
+                    // ratio={1}
+                  />
+                </EffectComposer>
+              )}
+            </Suspense>
+          </Canvas>
+        </div>
+      )}
+      {isStart && !reset && (
         <button className="btn rollbtn" onClick={handleRoll}>
           Roll it
         </button>
       )}
-      {reset && (
+      {isStart && reset && (
         <button className="btn rollbtn" onClick={handleReset}>
           Reset it
         </button>
