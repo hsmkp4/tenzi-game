@@ -14,18 +14,31 @@ import Lights from "./component/Lights";
 import DUMMY from "./data";
 import { GlitchMode } from "postprocessing";
 import { useSpring, a } from "@react-spring/three";
+import { Color } from "three";
+import StartPage from "./component/StartPage";
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
   const [reset, setReset] = useState(false);
+  // const [gameIsOver, setGameIsOver] = useState(false);
   const [glitch, setGlitch] = useState(false);
   const [isStart, setIsStart] = useState(false);
+  const [playerName, setPlayerName] = useState(() => {
+    let user = window.localStorage.getItem("playerName");
+    if (!user) {
+      user = "";
+    }
+    return user;
+  });
+  const [playerScore, setPlayerScore] = useState(0.0);
+
+  const seconds = useRef();
 
   // const { startContainer } = useSpring(() => ({
   //   startContainer: isStart ? "display: none" : "display: block",
   // }));
 
-  const spr = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
+  // const spr = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
 
   const handleRoll = () => {
     const newData = datas.map((data) =>
@@ -46,6 +59,7 @@ function App() {
 
   const handleReset = () => {
     setReset(false);
+
     setDatas(DUMMY);
   };
 
@@ -59,11 +73,11 @@ function App() {
   }, [datas]);
 
   useEffect(() => {
-    const timeOut = setTimeout(() => setGlitch(false), 1000);
-    console.log("start time out");
+    const timeOut = setTimeout(() => setGlitch(false), 500);
+    // console.log("start time out");
 
     return () => {
-      console.log("clean it");
+      // console.log("clean it");
       return clearTimeout(timeOut);
     };
   }, [glitch]);
@@ -81,41 +95,89 @@ function App() {
     additive: true,
   };
 
+  useEffect(() => {
+    if (isStart) {
+      window.localStorage.setItem("playerName", playerName);
+      // console.log("hey there!");
+    }
+  }, [isStart]);
+
+  useEffect(() => {
+    if (isStart && !reset) {
+      const time = Date.now();
+      const interval = setInterval(
+        () =>
+          (seconds.current.innerText = ((Date.now() - time) / 1000).toFixed(1)),
+        100
+      );
+
+      return () => clearInterval(interval);
+    }
+  }, [isStart, reset]);
+
+  useEffect(() => {
+    if (reset) {
+      setPlayerScore(seconds.current.innerText);
+
+      console.log("game is over");
+    }
+  }, [reset]);
+
+  console.log(playerScore);
+  console.log(reset);
+
   return (
     <div className="app">
       {!isStart && (
-        <div className="game__data">
-          <div className="container">
-            <h1 className="header">Tenzi</h1>
-            <h2 className="subheader">
-              Roll untill all dice are the same. Click on each dice to hold it.
-              Good Luck!
-            </h2>
-          </div>
-          <button className="rollbtn" onClick={() => setIsStart(true)}>
-            Lets Go!!
-          </button>
-        </div>
+        <StartPage
+          setIsStart={setIsStart}
+          setPlayerName={setPlayerName}
+          playerName={playerName}
+        />
       )}
       {isStart && (
         <div className="game__canvas">
+          <h1 ref={seconds} className="game__point">
+            0.0
+          </h1>
           <Canvas
-          //  camera={[0, 0, 100]}
-          // orthographic
-          // camera={{ zoom: 100, position: [0, 0, 100] }}
+            //  camera={[0, 0, 100]}
+            // orthographic
+            // camera={{ zoom: 100, position: [0, 0, 100] }}
+            // onCreated={({ gl, camera }) => {
+            //   gl.setClearColor(new Color("#c34"));
+            // }}
+            camera={{ fov: 55, near: 0.1, far: 1000, position: [0, 0, 5] }}
           >
+            {reset && (
+              <PerspectiveCamera
+                position={[0, 10, 0]}
+                fov={100}
+                makeDefault={reset}
+              />
+            )}
+            {!reset && (
+              <PerspectiveCamera
+                position={[0, 0, 5]}
+                fov={100}
+                makeDefault={!reset}
+              />
+            )}
             <Suspense fallback={null}>
               <Bloom>
                 <Boxes
                   datas={datas}
                   handleHoldDice={handleHoldDice}
                   isStart={isStart}
+                  reset={reset}
                 />
 
                 <Lights />
               </Bloom>
               <OrbitControls />
+              {/* {!reset && <OrbitControls />} */}
               {glitch && <CameraShake {...cameraShakeCong} />}
+              {/* {reset && <CameraShake {...cameraShakeCong} />} */}
             </Suspense>
           </Canvas>
         </div>
