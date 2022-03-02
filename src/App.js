@@ -16,6 +16,8 @@ import { GlitchMode } from "postprocessing";
 import { useSpring, a } from "@react-spring/three";
 import { Color } from "three";
 import StartPage from "./component/StartPage";
+import Plane from "./component/Plane";
+import { Physics } from "@react-three/cannon";
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
@@ -123,7 +125,7 @@ function App() {
     }
   }, [reset]);
 
-  console.log(playerScore);
+  // console.log(playerScore);
   console.log(reset);
 
   return (
@@ -141,36 +143,38 @@ function App() {
             0.0
           </h1>
           <Canvas
+            dpr={[1, 2]}
             //  camera={[0, 0, 100]}
             // orthographic
             // camera={{ zoom: 100, position: [0, 0, 100] }}
             // onCreated={({ gl, camera }) => {
             //   gl.setClearColor(new Color("#c34"));
             // }}
-            camera={{ fov: 55, near: 0.1, far: 1000, position: [0, 0, 5] }}
+            // camera={{ fov: 55, near: 0.1, far: 1000, position: [0, 0, 5] }}
           >
-            {reset && (
-              <PerspectiveCamera
-                position={[0, 10, 0]}
-                fov={100}
-                makeDefault={reset}
-              />
-            )}
-            {!reset && (
-              <PerspectiveCamera
+            <PerspectiveCamera
+              position={reset ? [0, 6, 0] : [0, 0, 5]}
+              fov={70}
+              makeDefault={reset}
+            />
+
+            {/* <PerspectiveCamera
                 position={[0, 0, 5]}
                 fov={100}
                 makeDefault={!reset}
-              />
-            )}
+              /> */}
+
             <Suspense fallback={null}>
               <Bloom>
-                <Boxes
-                  datas={datas}
-                  handleHoldDice={handleHoldDice}
-                  isStart={isStart}
-                  reset={reset}
-                />
+                <Physics>
+                  <Boxes
+                    datas={datas}
+                    handleHoldDice={handleHoldDice}
+                    isStart={isStart}
+                    reset={reset}
+                  />
+                  <Plane />
+                </Physics>
 
                 <Lights />
               </Bloom>

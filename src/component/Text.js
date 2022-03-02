@@ -11,6 +11,7 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import boldUrl from "./bold.bolb";
 import { useSpring, a } from "@react-spring/three";
+import { useBox } from "@react-three/cannon";
 
 extend({ TextGeometry });
 
@@ -23,14 +24,22 @@ export default function Text({
   pos,
   handleHoldDice,
   data,
+  reset,
 
   ...props
 }) {
   //functionality and animate
   const [isHover, setIsHover] = useState(false);
   const [isHold, setIsHold] = useState(false);
+  const [collapse, setColapse] = useState(false);
   const mesh = useRef();
   const textG = useRef();
+  const [ref] = useBox(() => ({
+    mass: 1,
+    position: pos,
+    // rotation: [-Math.PI / 4, Math.PI / 4, 0],
+    rotation: [0, 0, 0],
+  }));
 
   const handleHover = (e) => {
     e.stopPropagation();
@@ -83,35 +92,46 @@ export default function Text({
 
     const t = upDownMove((1 + Math.sin(elapsed * randomNum)) / 2);
 
-    if (!data.isHold) {
-      textG.current.rotation.y = Math.sin(elapsed * randomNum);
-      textG.current.rotation.z = Math.cos(elapsed * randomNum * 2);
-
-      textG.current.position.y = pos[1] + 1 - Math.sin(t * 3);
+    if (!data.isHold && !reset) {
+      if (textG) {
+        textG.current.rotation.y = Math.sin(elapsed * randomNum);
+        textG.current.rotation.z = Math.cos(elapsed * randomNum * 2);
+        textG.current.position.y = pos[1] + 1 - Math.sin(t * 3);
+      }
     }
   });
+  useEffect(() => {
+    setColapse((prv) => !prv);
+  }, [reset]);
 
+  // console.log(collapse);
   return (
     <group
-      {...props}
-      position={pos}
-      scale={[0.01 * size, 0.01 * size, 0.005]}
-      ref={textG}
+    // adding physic
+    // ref={reset ? ref : null}
     >
-      <a.mesh
-        onPointerOver={handleHover}
-        onPointerOut={handleHover}
-        onClick={handleIsHold}
-        scale={obj.scale}
-        ref={mesh}
+      <group
+        {...props}
+        position={pos}
+        scale={[0.01 * size, 0.01 * size, 0.005]}
+        ref={textG}
+        // ref={reset ? ref : textG}
       >
-        <textGeometry args={[children, config]} />
-        <meshStandardMaterial
-          color={data.isHold ? "orange" : isHover ? "red" : "steelblue"}
-          metalness={0.4}
-          roughness={0.1}
-        />
-      </a.mesh>
+        <a.mesh
+          onPointerOver={handleHover}
+          onPointerOut={handleHover}
+          onClick={handleIsHold}
+          scale={obj.scale}
+          ref={mesh}
+        >
+          <textGeometry args={[children, config]} />
+          <meshStandardMaterial
+            color={data.isHold ? "orange" : isHover ? "red" : "steelblue"}
+            metalness={0.4}
+            roughness={0.1}
+          />
+        </a.mesh>
+      </group>
     </group>
   );
 }
