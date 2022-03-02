@@ -1,10 +1,11 @@
 import { useSpring, a } from "@react-spring/three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import React, { useMemo, useRef } from "react";
 import Text from "./Text";
 
 function Boxes({ datas, handleHoldDice, isStart }) {
   const ref = useRef();
+
   const randomPose = useMemo(() => {
     return new Array(10)
       .fill()
@@ -18,13 +19,16 @@ function Boxes({ datas, handleHoldDice, isStart }) {
   // console.log(randomPose);
   useFrame(({ clock }) => {
     const elapsed = clock.getElapsedTime();
-    if (elapsed <= 2) {
-      ref.current.position.y += elapsed * 0.01 + 0.095;
-    }
+    // if (elapsed <= 2) {
+    //   ref.current.position.y += elapsed * 0.01 + 0.095;
+    // }
     // ref.current.pos
   });
   return (
-    <group ref={ref} position={[0, -12, 0]}>
+    <group
+      ref={ref}
+      //  position={[0, -12, 0]}
+    >
       {randomPose.map((el, i) => (
         <Text
           pos={el}

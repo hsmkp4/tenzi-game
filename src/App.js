@@ -1,4 +1,9 @@
-import { OrbitControls } from "@react-three/drei";
+import {
+  CameraShake,
+  OrbitControls,
+  OrthographicCamera,
+  PerspectiveCamera,
+} from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { EffectComposer, Glitch } from "@react-three/postprocessing";
 import { Suspense, useEffect, useRef, useState } from "react";
@@ -54,15 +59,27 @@ function App() {
   }, [datas]);
 
   useEffect(() => {
-    const timeOut = setTimeout(() => setGlitch(false), 200);
+    const timeOut = setTimeout(() => setGlitch(false), 1000);
+    console.log("start time out");
 
-    return () => clearTimeout(timeOut);
-  });
+    return () => {
+      console.log("clean it");
+      return clearTimeout(timeOut);
+    };
+  }, [glitch]);
 
-  // console.log(datas);
-  // console.log(glitch);
-  // console.log(GlitchMode);
-  console.log(isStart);
+  const cameraShakeCong = {
+    maxYaw: 1,
+    maxPitch: 1,
+    maxRoll: 1,
+    yawFrequency: 100,
+    pitchFrequency: 100,
+    rollFrequency: 100,
+    intensity: 1,
+    decay: true,
+    decayRate: 0.75,
+    additive: true,
+  };
 
   return (
     <div className="app">
@@ -82,7 +99,11 @@ function App() {
       )}
       {isStart && (
         <div className="game__canvas">
-          <Canvas camera={[0, 0, 100]}>
+          <Canvas
+          //  camera={[0, 0, 100]}
+          // orthographic
+          // camera={{ zoom: 100, position: [0, 0, 100] }}
+          >
             <Suspense fallback={null}>
               <Bloom>
                 <Boxes
@@ -94,20 +115,7 @@ function App() {
                 <Lights />
               </Bloom>
               <OrbitControls />
-              {glitch && (
-                <EffectComposer>
-                  <Glitch
-                    delay={[0, 0]}
-                    duration={[0.0, 0.4]}
-                    // dtSize={256}
-                    columns={0.01}
-                    mode={GlitchMode.CONSTANT_WILD}
-                    active
-                    strength={[0.1, 0.9]}
-                    // ratio={1}
-                  />
-                </EffectComposer>
-              )}
+              {glitch && <CameraShake {...cameraShakeCong} />}
             </Suspense>
           </Canvas>
         </div>

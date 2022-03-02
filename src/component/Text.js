@@ -32,11 +32,13 @@ export default function Text({
   const mesh = useRef();
   const textG = useRef();
 
-  const handleHover = () => {
+  const handleHover = (e) => {
+    e.stopPropagation();
     setIsHover((pre) => !pre);
   };
 
-  const handleIsHold = () => {
+  const handleIsHold = (e) => {
+    e.stopPropagation();
     setIsHold((pre) => !pre);
     handleHoldDice(data.id);
   };
@@ -57,9 +59,9 @@ export default function Text({
       curveSegments: 32,
       bevelEnabled: true,
       bevelThickness: 6,
-      bevelSize: 2.5,
+      bevelSize: 1,
       bevelOffset: 0,
-      bevelSegments: 8,
+      bevelSegments: 6,
     }),
     [font]
   );
