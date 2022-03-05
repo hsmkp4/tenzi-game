@@ -64,6 +64,7 @@ function App() {
 
   const handleReset = () => {
     setReset(false);
+    setIsStart(false);
 
     setDatas(DUMMY);
   };

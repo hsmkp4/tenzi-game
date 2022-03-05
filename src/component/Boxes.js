@@ -18,8 +18,17 @@ function Boxes({ datas, handleHoldDice, isStart, reset }) {
   const { camera } = useThree();
   // const obj = useSpring({ position: isStart ? [0, 0, 0] : [0, -28, 0] });
   // console.log(randomPose);
-  useFrame(({ clock }) => {
-    const elapsed = clock.getElapsedTime();
+  useFrame((state) => {
+    const elapsed = state.clock.getElapsedTime();
+    // if (!reset) {
+    //   ref.current.position.set(0, 0, 0);
+    // }
+    // if (reset) {
+    //   // ref.current.position.set(0, 0, 0);
+    //   ref.current.position.y = elapsed / 4;
+    //   ref.current.rotation.y = Math.sin(elapsed) * 2;
+    //   ref.current.rotation.z = Math.cos(elapsed);
+    // }
 
     //1- camera change to top and move group
     // if (reset) {
@@ -38,6 +47,12 @@ function Boxes({ datas, handleHoldDice, isStart, reset }) {
   //     ref.current.rotation.set([0, 0, 0]);
   //   }
   // }, [reset]);
+  // useEffect(() => {
+  //   if (!reset) {
+  //     ref.current.position.y = 0;
+  //   }
+  // }, [reset]);
+  console.log(ref);
   return (
     <group
       ref={ref}

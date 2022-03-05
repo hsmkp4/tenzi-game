@@ -87,21 +87,29 @@ export default function Text({
   // animation
   const upDownMove = (t) =>
     t < 0.5 ? 10 * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-  useFrame(({ clock }) => {
-    const elapsed = clock.getElapsedTime();
+  useFrame((state) => {
+    const elapsed = state.clock.getElapsedTime();
+    // console.log(state);
 
     const t = upDownMove((1 + Math.sin(elapsed * randomNum)) / 2);
 
     if (!data.isHold && !reset) {
-      if (textG) {
-        textG.current.rotation.y = Math.sin(elapsed * randomNum);
-        textG.current.rotation.z = Math.cos(elapsed * randomNum * 2);
-        textG.current.position.y = pos[1] + 1 - Math.sin(t * 3);
-      }
+      textG.current.rotation.y = Math.sin(elapsed * randomNum);
+      textG.current.rotation.z = Math.cos(elapsed * randomNum * 2);
+      textG.current.position.y = pos[1] + 1 - Math.sin(t * 3);
+    }
+    if (reset) {
+      // ref.current.position.set(0, 0, 0);
+      textG.current.position.y = randomNum * elapsed;
+      textG.current.rotation.y = Math.sin(elapsed * randomNum);
+      textG.current.rotation.z = Math.cos((elapsed * randomNum) / 2);
+      // textG.current.rotation.z = Math.cos(elapsed);
     }
   });
   useEffect(() => {
-    setColapse((prv) => !prv);
+    if (!reset) {
+      // textG.current.position.set(pos);
+    }
   }, [reset]);
 
   // console.log(collapse);
