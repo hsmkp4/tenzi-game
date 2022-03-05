@@ -21,6 +21,7 @@ import { Physics } from "@react-three/cannon";
 import Main from "./component/Main";
 import Box from "./component/Box";
 import Particles from "./component/Particles";
+import EndGame from "./component/EndGame";
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
@@ -143,7 +144,7 @@ function App() {
       )}
       {isStart && (
         <div className="game__canvas">
-          <h1 ref={seconds} className="game__point">
+          <h1 ref={seconds} className={`game__point ${reset ? "hide" : ""}`}>
             0.0
           </h1>
           <Canvas
@@ -184,10 +185,17 @@ function App() {
         </button>
       )}
       {isStart && reset && (
+        <EndGame
+          handleReset={handleReset}
+          playerScore={playerScore}
+          playerName={playerName}
+        />
+      )}
+      {/* {isStart && reset && (
         <button className="btn rollbtn" onClick={handleReset}>
           Reset it
         </button>
-      )}
+      )} */}
     </div>
   );
 }

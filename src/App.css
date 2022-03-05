@@ -113,3 +113,37 @@
   font-family: inherit;
   width: 60%;
 }
+
+.endgame {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+
+.endgame__data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 81;
+}
+.bacdrop {
+  background-color: #c34;
+  width: 120%;
+  height: 120%;
+  position: absolute;
+  /* top: 0; */
+  filter: blur(4px);
+  filter: sepia(50%);
+  opacity: 0.1;
+}
+
+.hide {
+  opacity: 0;
+}
