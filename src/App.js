@@ -46,6 +46,10 @@ function App() {
 
   // const spr = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
 
+  const springObj = useSpring({
+    cameraPos: reset ? [0, 6, 0] : [0, 0, 5],
+  });
+
   const handleRoll = () => {
     const newData = datas.map((data) =>
       data.isHold

@@ -99,47 +99,41 @@ export default function Text({
       textG.current.position.y = pos[1] + 1 - Math.sin(t * 3);
     }
     if (reset) {
-      // ref.current.position.set(0, 0, 0);
-      textG.current.position.y = randomNum * elapsed;
-      textG.current.rotation.y = Math.sin(elapsed * randomNum);
-      textG.current.rotation.z = Math.cos((elapsed * randomNum) / 2);
-      // textG.current.rotation.z = Math.cos(elapsed);
+      textG.current.position.y -= randomNum / 20;
+      textG.current.rotation.y = Math.sin(elapsed * randomNum) * 8;
+      textG.current.rotation.z = Math.cos((elapsed * randomNum) / 2) * 10;
+      textG.current.rotation.x = Math.sin(elapsed * randomNum * 3) / 4;
     }
   });
-  useEffect(() => {
-    if (!reset) {
-      // textG.current.position.set(pos);
-    }
-  }, [reset]);
+  // useEffect(() => {
+  //   if (!reset) {
+  //     textG.current.position.y = pos[1];
+  //   }
+  // }, [reset]);
 
   // console.log(collapse);
   return (
     <group
-    // adding physic
-    // ref={reset ? ref : null}
+      {...props}
+      position={pos}
+      scale={[0.01 * size, 0.01 * size, 0.005]}
+      ref={textG}
+      // ref={reset ? ref : textG}
     >
-      <group
-        {...props}
-        position={pos}
-        scale={[0.01 * size, 0.01 * size, 0.005]}
-        ref={textG}
-        // ref={reset ? ref : textG}
+      <a.mesh
+        onPointerOver={handleHover}
+        onPointerOut={handleHover}
+        onClick={handleIsHold}
+        scale={obj.scale}
+        ref={mesh}
       >
-        <a.mesh
-          onPointerOver={handleHover}
-          onPointerOut={handleHover}
-          onClick={handleIsHold}
-          scale={obj.scale}
-          ref={mesh}
-        >
-          <textGeometry args={[children, config]} />
-          <meshStandardMaterial
-            color={data.isHold ? "orange" : isHover ? "red" : "steelblue"}
-            metalness={0.4}
-            roughness={0.1}
-          />
-        </a.mesh>
-      </group>
+        <textGeometry args={[children, config]} />
+        <meshStandardMaterial
+          color={data.isHold ? "orange" : isHover ? "red" : "steelblue"}
+          metalness={0.4}
+          roughness={0.1}
+        />
+      </a.mesh>
     </group>
   );
 }

@@ -52,7 +52,7 @@ function Boxes({ datas, handleHoldDice, isStart, reset }) {
   //     ref.current.position.y = 0;
   //   }
   // }, [reset]);
-  console.log(ref);
+
   return (
     <group
       ref={ref}

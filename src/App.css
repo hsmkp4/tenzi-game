@@ -147,3 +147,20 @@
 .hide {
   opacity: 0;
 }
+
+.endgame__data h3 {
+  font-weight: 100;
+  margin-bottom: 0.5rem;
+}
+.endgame__data h3 span,
+.endgame__data h1 span {
+  font-weight: 700;
+}
+.endgame__data h1 {
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+/* .endgame__data h1 span {
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+} */
