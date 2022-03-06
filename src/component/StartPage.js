@@ -4,7 +4,7 @@ function StartPage({ setIsStart, setPlayerName, playerName }) {
       <div className="container">
         <h1 className="header">Tenzi</h1>
         <h2 className="subheader">
-          Roll untill all numbers are the same. Click on each number to hold it.
+          Roll until all numbers are the same. Click on each number to hold it.
           Good Luck!
         </h2>
       </div>
