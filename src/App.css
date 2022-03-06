@@ -62,7 +62,7 @@
 .rollbtn:hover {
   background-color: white;
   color: steelblue;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 .rollbtn:active {
   background-color: orange;
@@ -93,9 +93,32 @@
   /* background-color: #c34; */
 
   border: solid 1px #c34;
-  margin: 0 0 10rem 2rem;
+  margin: 0 0 8rem 2rem;
   border-radius: 6px;
   text-align: center;
+}
+
+.remake {
+  font-weight: 400;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  margin: 0 0 40px 2.7rem;
+  border-radius: 6px;
+  padding: 1rem 1.4rem;
+
+  background-color: #222;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.remake:hover {
+  background-color: #c34;
 }
 
 .form__name {
@@ -160,7 +183,22 @@
   font-weight: 400;
   margin-bottom: 0.5rem;
 }
-/* .endgame__data h1 span {
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-} */
+
+.game__diff {
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 8rem;
+}
+.game__diff div {
+  border: 1px solid #c34;
+  padding: 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.game__diff div:hover {
+  background-color: #c34;
+}
+.game__diff .active {
+  background-color: #c34;
+}

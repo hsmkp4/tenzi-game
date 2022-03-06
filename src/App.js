@@ -29,6 +29,9 @@ function App() {
     return user;
   });
   const [playerScore, setPlayerScore] = useState(0.0);
+  const [gameDiff, setGameDiff] = useState(2);
+  // console.log(gameDiff);
+  // 0 = ea pa -1 = easy -2 = normal-3 = hard -4 = crazy
   const seconds = useRef();
 
   const handleRoll = () => {
@@ -50,6 +53,10 @@ function App() {
 
   const handleReset = () => {
     setReset(false);
+    setIsStart(false);
+    setDatas(DUMMY);
+  };
+  const handleRemake = () => {
     setIsStart(false);
     setDatas(DUMMY);
   };
@@ -114,6 +121,8 @@ function App() {
           setIsStart={setIsStart}
           setPlayerName={setPlayerName}
           playerName={playerName}
+          setGameDiff={setGameDiff}
+          gameDiff={gameDiff}
         />
       )}
       {isStart && (
@@ -127,7 +136,7 @@ function App() {
             // camera={{ zoom: 100, position: [0, 0, 100] }}
           >
             <Main>
-              <Particles />
+              <Particles gameDiff={gameDiff} />
             </Main>
             <PerspectiveCamera
               position={reset ? [0, 6, 0] : [0, 0, 5]}
@@ -141,6 +150,7 @@ function App() {
                   handleHoldDice={handleHoldDice}
                   isStart={isStart}
                   reset={reset}
+                  gameDiff={gameDiff}
                 />
                 <Lights />
               </Bloom>
@@ -155,11 +165,17 @@ function App() {
           Roll it
         </button>
       )}
+      {isStart && !reset && (
+        <button className="remake" onClick={handleRemake}>
+          Remake
+        </button>
+      )}
       {isStart && reset && (
         <EndGame
           handleReset={handleReset}
           playerScore={playerScore}
           playerName={playerName}
+          gameDiff={gameDiff}
         />
       )}
     </div>

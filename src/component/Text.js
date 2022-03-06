@@ -18,12 +18,10 @@ export default function Text({
   handleHoldDice,
   data,
   reset,
-
+  gameDiff,
   ...props
 }) {
-  //functionality and animate
   const [isHover, setIsHover] = useState(false);
-  const [isHold, setIsHold] = useState(false);
   const mesh = useRef();
   const textG = useRef();
 
@@ -34,7 +32,6 @@ export default function Text({
 
   const handleIsHold = (e) => {
     e.stopPropagation();
-    setIsHold((pre) => !pre);
     handleHoldDice(data.id);
   };
 
@@ -78,10 +75,26 @@ export default function Text({
 
     const t = upDownMove((1 + Math.sin(elapsed * randomNum)) / 2);
 
-    if (!data.isHold && !reset) {
+    if (!data.isHold && !reset && gameDiff === 1) {
+      textG.current.position.y = pos[1] + Math.sin(randomNum * elapsed) / 2;
+    }
+    if (!data.isHold && !reset && gameDiff === 2) {
       textG.current.rotation.y = Math.sin(elapsed * randomNum);
       textG.current.rotation.z = Math.cos(elapsed * randomNum * 2);
       textG.current.position.y = pos[1] + 1 - Math.sin(t * 3);
+    }
+    if (!data.isHold && !reset && gameDiff === 3) {
+      textG.current.rotation.y = Math.sin(elapsed * randomNum * t);
+      textG.current.rotation.z = Math.cos(elapsed * randomNum * 2 * t);
+      textG.current.position.y = pos[1] + 1 - Math.sin(t * 5);
+    }
+    if (!data.isHold && !reset && gameDiff === 4) {
+      textG.current.rotation.y = Math.sin(elapsed * randomNum * t);
+      textG.current.rotation.x = Math.sin(elapsed * randomNum * t * t) * 10;
+      textG.current.rotation.z = Math.cos(elapsed * randomNum * 2 * t) * t;
+      textG.current.position.y = pos[1] + 1 - Math.sin(t * 2);
+      textG.current.position.x = pos[0] + 1 - Math.sin(randomNum * t);
+      textG.current.position.z = pos[2] + 1 - Math.sin(randomNum * t);
     }
     if (reset) {
       textG.current.position.y -= randomNum / 20;

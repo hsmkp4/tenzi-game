@@ -2,7 +2,9 @@ import * as THREE from "three";
 import { useRef, useMemo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 
-export default function Particles({ count = 2000 }) {
+export default function Particles({ gameDiff }) {
+  const count = gameDiff > 2 ? 5000 : 2500;
+
   const mesh = useRef();
   const light = useRef();
   const { size, viewport } = useThree();

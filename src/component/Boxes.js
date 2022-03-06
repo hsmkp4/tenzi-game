@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import Text from "./Text";
 
-function Boxes({ datas, handleHoldDice, isStart, reset }) {
+function Boxes({ datas, handleHoldDice, gameDiff, reset }) {
   const ref = useRef();
   const randomPose = useMemo(() => {
     return new Array(10)
@@ -33,6 +33,7 @@ function Boxes({ datas, handleHoldDice, isStart, reset }) {
           handleHoldDice={handleHoldDice}
           data={datas[i]}
           reset={reset}
+          gameDiff={gameDiff}
         />
       ))}
     </group>
