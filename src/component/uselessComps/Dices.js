@@ -1,5 +1,5 @@
-import React from 'react';
-import Dice from './Dice';
+import React from "react";
+import Dice from "./Dice";
 
 function Dices({ datas, func }) {
   return (

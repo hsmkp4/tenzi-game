@@ -1,5 +1,3 @@
-import React, { useEffect } from "react";
-
 function StartPage({ setIsStart, setPlayerName, playerName }) {
   return (
     <div className="game__data">

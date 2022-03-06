@@ -1,32 +1,24 @@
 import {
   CameraShake,
   OrbitControls,
-  OrthographicCamera,
   PerspectiveCamera,
 } from "@react-three/drei";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { EffectComposer, Glitch } from "@react-three/postprocessing";
+import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
 import "./App.css";
 import Bloom from "./component/Bloom";
 import Boxes from "./component/Boxes";
 import Lights from "./component/Lights";
 import DUMMY from "./data";
-import { GlitchMode } from "postprocessing";
 import { useSpring, a } from "@react-spring/three";
-import { Color } from "three";
 import StartPage from "./component/StartPage";
-import Plane from "./component/Plane";
-import { Physics } from "@react-three/cannon";
 import Main from "./component/Main";
-import Box from "./component/Box";
 import Particles from "./component/Particles";
 import EndGame from "./component/EndGame";
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
   const [reset, setReset] = useState(false);
-  // const [gameIsOver, setGameIsOver] = useState(false);
   const [glitch, setGlitch] = useState(false);
   const [isStart, setIsStart] = useState(false);
   const [playerName, setPlayerName] = useState(() => {
@@ -37,18 +29,7 @@ function App() {
     return user;
   });
   const [playerScore, setPlayerScore] = useState(0.0);
-
   const seconds = useRef();
-
-  // const { startContainer } = useSpring(() => ({
-  //   startContainer: isStart ? "display: none" : "display: block",
-  // }));
-
-  // const spr = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
-
-  const springObj = useSpring({
-    cameraPos: reset ? [0, 6, 0] : [0, 0, 5],
-  });
 
   const handleRoll = () => {
     const newData = datas.map((data) =>
@@ -70,14 +51,12 @@ function App() {
   const handleReset = () => {
     setReset(false);
     setIsStart(false);
-
     setDatas(DUMMY);
   };
 
   useEffect(() => {
     const conc1 = datas.every((el) => datas[0].diceNum === el.diceNum);
     const conc2 = datas.every((el) => el.isHold === true);
-    // console.log(conc1, conc2);
     if (conc1 && conc2) {
       setReset(true);
     }
@@ -85,10 +64,7 @@ function App() {
 
   useEffect(() => {
     const timeOut = setTimeout(() => setGlitch(false), 500);
-    // console.log("start time out");
-
     return () => {
-      // console.log("clean it");
       return clearTimeout(timeOut);
     };
   }, [glitch]);
@@ -109,7 +85,6 @@ function App() {
   useEffect(() => {
     if (isStart) {
       window.localStorage.setItem("playerName", playerName);
-      // console.log("hey there!");
     }
   }, [isStart]);
 
@@ -129,13 +104,8 @@ function App() {
   useEffect(() => {
     if (reset) {
       setPlayerScore(seconds.current.innerText);
-
-      console.log("game is over");
     }
   }, [reset]);
-
-  // console.log(playerScore);
-  console.log(reset);
 
   return (
     <div className="app">
@@ -153,10 +123,8 @@ function App() {
           </h1>
           <Canvas
             dpr={[1, 2]}
-            //  camera={[0, 0, 100]}
             // orthographic
             // camera={{ zoom: 100, position: [0, 0, 100] }}
-            // camera={{ fov: 55, near: 0.1, far: 1000, position: [0, 0, 5] }}
           >
             <Main>
               <Particles />
@@ -166,18 +134,17 @@ function App() {
               fov={70}
               makeDefault={reset}
             />
-
-            <Bloom>
-              <Physics>
+            <Suspense fallback={null}>
+              <Bloom>
                 <Boxes
                   datas={datas}
                   handleHoldDice={handleHoldDice}
                   isStart={isStart}
                   reset={reset}
                 />
-              </Physics>
-              <Lights />
-            </Bloom>
+                <Lights />
+              </Bloom>
+            </Suspense>
             <OrbitControls />
             {glitch && <CameraShake {...cameraShakeCong} />}
           </Canvas>
@@ -195,11 +162,6 @@ function App() {
           playerName={playerName}
         />
       )}
-      {/* {isStart && reset && (
-        <button className="btn rollbtn" onClick={handleReset}>
-          Reset it
-        </button>
-      )} */}
     </div>
   );
 }

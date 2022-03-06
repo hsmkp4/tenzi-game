@@ -1,11 +1,10 @@
 import { useSpring, a } from "@react-spring/three";
-import { useFrame, useThree } from "@react-three/fiber";
-import React, { useEffect, useMemo, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { useMemo, useRef } from "react";
 import Text from "./Text";
 
 function Boxes({ datas, handleHoldDice, isStart, reset }) {
   const ref = useRef();
-
   const randomPose = useMemo(() => {
     return new Array(10)
       .fill()
@@ -15,43 +14,10 @@ function Boxes({ datas, handleHoldDice, isStart, reset }) {
         (Math.random() - 0.5) * 4,
       ]);
   }, []);
-  const { camera } = useThree();
-  // const obj = useSpring({ position: isStart ? [0, 0, 0] : [0, -28, 0] });
-  // console.log(randomPose);
+
   useFrame((state) => {
     const elapsed = state.clock.getElapsedTime();
-    // if (!reset) {
-    //   ref.current.position.set(0, 0, 0);
-    // }
-    // if (reset) {
-    //   // ref.current.position.set(0, 0, 0);
-    //   ref.current.position.y = elapsed / 4;
-    //   ref.current.rotation.y = Math.sin(elapsed) * 2;
-    //   ref.current.rotation.z = Math.cos(elapsed);
-    // }
-
-    //1- camera change to top and move group
-    // if (reset) {
-    //   ref.current.position.y = elapsed * 2;
-    //   ref.current.rotation.z = Math.sin(elapsed);
-    //   ref.current.rotation.x = Math.cos(elapsed);
-    //   console.log("make it move out ");
-    // }
-
-    //2-camera move when game finished
-    // camera.position.z = elapsed;
   });
-  // useEffect(() => {
-  //   if (!reset) {
-  //     ref.current.position.set([0, 0, 0]);
-  //     ref.current.rotation.set([0, 0, 0]);
-  //   }
-  // }, [reset]);
-  // useEffect(() => {
-  //   if (!reset) {
-  //     ref.current.position.y = 0;
-  //   }
-  // }, [reset]);
 
   return (
     <group

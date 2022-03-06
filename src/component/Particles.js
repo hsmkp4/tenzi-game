@@ -1,12 +1,11 @@
 import * as THREE from "three";
-import React, { useRef, useMemo } from "react";
+import { useRef, useMemo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 
 export default function Particles({ count = 2000 }) {
   const mesh = useRef();
   const light = useRef();
   const { size, viewport } = useThree();
-  const aspect = size.width / viewport.width;
 
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
