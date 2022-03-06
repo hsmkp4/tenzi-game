@@ -15,6 +15,7 @@ import StartPage from "./component/StartPage";
 import Main from "./component/Main";
 import Particles from "./component/Particles";
 import EndGame from "./component/EndGame";
+import * as audio from "./audio";
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
@@ -32,6 +33,7 @@ function App() {
   const [gameDiff, setGameDiff] = useState(2);
   // console.log(gameDiff);
   // 0 = ea pa -1 = easy -2 = normal-3 = hard -4 = crazy
+  const [muted, setMuted] = useState(true);
   const seconds = useRef();
 
   const handleRoll = () => {
@@ -41,6 +43,7 @@ function App() {
         : { ...data, diceNum: Math.floor(Math.random() * 6 + 1) }
     );
     setGlitch(true);
+    audio.roolMusic.play();
     setDatas(newData);
   };
 
@@ -114,6 +117,23 @@ function App() {
     }
   }, [reset]);
 
+  useEffect(() => {
+    if (isStart && !reset && !muted) {
+      audio.bgMusic.play();
+    }
+    if (isStart && !reset && muted) {
+      audio.bgMusic.pause();
+    }
+    if (reset) {
+      audio.bgMusic.pause();
+    }
+    if (!isStart) {
+      audio.bgMusic.load();
+    }
+  }, [isStart, muted, reset]);
+
+  console.log(muted);
+
   return (
     <div className="app">
       {!isStart && (
@@ -123,6 +143,7 @@ function App() {
           playerName={playerName}
           setGameDiff={setGameDiff}
           gameDiff={gameDiff}
+          setMuted={setMuted}
         />
       )}
       {isStart && (
@@ -130,6 +151,7 @@ function App() {
           <h1 ref={seconds} className={`game__point ${reset ? "hide" : ""}`}>
             0.0
           </h1>
+
           <Canvas
             dpr={[1, 2]}
             // orthographic
@@ -161,15 +183,19 @@ function App() {
         </div>
       )}
       {isStart && !reset && (
-        <button className="btn rollbtn" onClick={handleRoll}>
-          Roll it
-        </button>
+        <div>
+          <button className="btn rollbtn" onClick={handleRoll}>
+            Roll it
+          </button>
+          <button className="remake" onClick={handleRemake}>
+            Remake
+          </button>
+          <button className="mute" onClick={() => setMuted((prv) => !prv)}>
+            {muted ? "unmute" : "mute"}
+          </button>
+        </div>
       )}
-      {isStart && !reset && (
-        <button className="remake" onClick={handleRemake}>
-          Remake
-        </button>
-      )}
+
       {isStart && reset && (
         <EndGame
           handleReset={handleReset}

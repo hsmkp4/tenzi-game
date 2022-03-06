@@ -4,6 +4,7 @@ function StartPage({
   playerName,
   setGameDiff,
   gameDiff,
+  setMuted,
 }) {
   const modes = {
     0: "goo geza",
@@ -19,6 +20,11 @@ function StartPage({
   //   3: "Ghashnic",
   //   4: "Tela",
   // };
+
+  const handleStart = () => {
+    setIsStart(true);
+    setMuted(false);
+  };
   return (
     <div className="game__data">
       <div className="container">
@@ -37,7 +43,7 @@ function StartPage({
           value={playerName}
           placeholder="Name"
         />
-        <button className="rollbtn" onClick={() => setIsStart(true)}>
+        <button className="rollbtn" onClick={handleStart}>
           Lets Go!!
         </button>
       </div>
