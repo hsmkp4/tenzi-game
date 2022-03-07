@@ -1,6 +1,6 @@
 function EndGame({ handleReset, playerScore, playerName, gameDiff }) {
   const modes = {
-    0: "goo geza",
+    0: "googeza",
     1: "goo",
     2: "jineka",
     3: "goomesh",

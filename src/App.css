@@ -1,7 +1,383 @@
-.app {
-  /* background-color: red; */
-}
 .game__data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-decoration: underline;
+  /* text-decoration-thickness: 3px; */
+  animation: decColor 0.8s infinite;
+}
+.container {
+  /* margin: -0.7rem; */
+  border: 1px solid black;
+  padding: 1rem;
+  width: 90%;
+  border-radius: 8px;
+  border: solid 1px #c34;
+  /* background-color: rgb(0, 41, 58); */
+}
+
+.subheader {
+  text-align: center;
+  /* padding: 0.2rem 0.2rem; */
+  font-weight: 400;
+  font-size: 1rem;
+}
+.dices {
+  display: grid;
+  margin: 1rem;
+  grid-template-columns: 100px 100px 100px 100px 100px;
+  grid-template-rows: 100px 100px;
+  align-items: center;
+  align-content: center;
+}
+.dice {
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid black;
+  margin: 0 0.5rem;
+  padding: 1.5rem 0;
+
+  border-radius: 6px;
+}
+.dice.hold {
+  background-color: orange;
+}
+
+.rollbtn {
+  font-weight: 400;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  background-color: steelblue;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.rollbtn:hover {
+  background-color: white;
+  color: steelblue;
+  /* border: 1px solid black; */
+}
+.rollbtn:active {
+  background-color: orange;
+  color: white;
+}
+
+.game__canvas {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.btn {
+  position: fixed;
+  bottom: 40px;
+  left: 40%;
+}
+
+.game__point {
+  font-size: 1rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 101;
+  padding: 0.5rem;
+  width: 6rem;
+
+  border: solid 2px #c34;
+  margin: 0 0 6rem 1rem;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.remake {
+  font-weight: 400;
+  font-size: 0.8rem;
+  font-family: inherit;
+  outline: none;
+
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  margin: 0 0 45px 1.6rem;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+
+  background-color: #222;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.remake:hover {
+  background-color: #c34;
+}
+
+.form__name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+  /* width: 30%; */
+  margin-top: 1rem;
+}
+.form__name input {
+  outline: none;
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-family: inherit;
+  width: 6.5rem;
+}
+.form__name button {
+  width: 110%;
+}
+
+.endgame {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+
+.endgame__data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 81;
+  text-align: center;
+  padding: 1rem;
+}
+.bacdrop {
+  background-color: #c34;
+  width: 120%;
+  height: 120%;
+  position: absolute;
+  /* top: 0; */
+  filter: blur(4px);
+  filter: sepia(50%);
+  opacity: 0.1;
+}
+
+.hide {
+  opacity: 0;
+}
+
+.endgame__data h3 {
+  font-weight: 100;
+  margin-bottom: 0.5rem;
+}
+.endgame__data h3 span,
+.endgame__data h1 span {
+  font-weight: 700;
+}
+.endgame__data h1 {
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.game__mode {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+.game__mode h3 {
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+.game__diff {
+  /* width: 100vw; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.game__diff div {
+  border: 1px solid #c34;
+  text-align: center;
+  width: 12rem;
+  padding: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.game__diff div:hover {
+  background-color: #c34;
+}
+.game__diff .active {
+  background-color: #c34;
+}
+
+.mute {
+  font-weight: 400;
+  font-size: 0.5rem;
+  font-family: inherit;
+  outline: none;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  /* margin: 0 0 12px 4.5rem; */
+  margin: 1rem;
+  border-radius: 6px;
+  padding: 0.5rem 0.5rem;
+
+  background-color: #222;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.mute:hover {
+  background-color: #c34;
+}
+
+@keyframes decColor {
+  0% {
+    text-decoration-color: #c34;
+  }
+  100% {
+    text-decoration-color: steelblue;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .header {
+    padding-top: 2rem;
+    font-size: 2rem;
+  }
+  .container {
+    padding: 2rem;
+    width: 80%;
+    border-radius: 8px;
+    border: solid 1px #c34;
+  }
+
+  .subheader {
+    font-size: 1.2rem;
+  }
+  .form__name {
+    margin-top: 2rem;
+    width: 15rem;
+  }
+  .form__name input {
+    border-radius: 6px;
+    width: 80%;
+  }
+  .form__name button {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .game__point {
+    font-size: 1.4rem;
+    padding: 1rem;
+    width: 8rem;
+    margin: 0 0 7rem 2rem;
+  }
+
+  .remake {
+    font-size: 1rem;
+    margin: 0 0 40px 2.7rem;
+    padding: 1rem 1.4rem;
+  }
+
+  .mute {
+    font-size: 1rem;
+    margin: 2.2rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .rollbtn {
+    font-weight: 500;
+    font-size: 1.4rem;
+    padding: 1rem 1.5rem;
+  }
+  .btn {
+    left: 45%;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .header {
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+    font-size: 3rem;
+    letter-spacing: 100px;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+  }
+  .container {
+    padding: 3.5rem;
+    width: 80%;
+    border-radius: 8px;
+    border: solid 1px #c34;
+  }
+
+  .subheader {
+    font-size: 1.6rem;
+  }
+  .form__name {
+    margin-top: 4rem;
+    width: 35rem;
+  }
+  .form__name input {
+    padding: 0.8rem;
+    border-radius: 6px;
+    width: 80%;
+  }
+  .form__name button {
+    width: 50%;
+  }
+
+  .game__mode {
+    margin-top: 4rem;
+    width: 100vw;
+  }
+  .game__mode h3 {
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+  .game__diff {
+    flex-direction: row;
+    width: 100vw;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .game__diff div {
+    border: 1px solid #c34;
+    text-align: center;
+    width: 12rem;
+    padding: 2.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
+/* desctop first old one :D */
+
+/* .game__data {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +394,6 @@
   width: 60%;
   border-radius: 8px;
   border: solid 1px #c34;
-  /* background-color: rgb(0, 41, 58); */
 }
 
 .subheader {
@@ -62,7 +437,6 @@
 .rollbtn:hover {
   background-color: white;
   color: steelblue;
-  /* border: 1px solid black; */
 }
 .rollbtn:active {
   background-color: orange;
@@ -90,7 +464,6 @@
   z-index: 101;
   padding: 1rem;
   width: 8rem;
-  /* background-color: #c34; */
 
   border: solid 1px #c34;
   margin: 0 0 7rem 2rem;
@@ -139,7 +512,6 @@
 
 .endgame {
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -161,7 +533,6 @@
   width: 120%;
   height: 120%;
   position: absolute;
-  /* top: 0; */
   filter: blur(4px);
   filter: sepia(50%);
   opacity: 0.1;
@@ -224,4 +595,4 @@
 
 .mute:hover {
   background-color: #c34;
-}
+} */
