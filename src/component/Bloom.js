@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
+import { DefaultLoadingManager } from "three";
 
 extend({ EffectComposer, UnrealBloomPass, RenderPass });
 

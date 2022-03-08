@@ -1,5 +1,6 @@
 import {
   CameraShake,
+  // Loader,
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei";
@@ -16,6 +17,7 @@ import Main from "./component/Main";
 import Particles from "./component/Particles";
 import EndGame from "./component/EndGame";
 import * as audio from "./audio";
+import Loader from "./component/Loader";
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
@@ -31,6 +33,7 @@ function App() {
   });
   const [playerScore, setPlayerScore] = useState(0.0);
   const [gameDiff, setGameDiff] = useState(2);
+  const [loaderState, setLoaderState] = useState(false);
   // console.log(gameDiff);
   // 0 = ea pa -1 = easy -2 = normal-3 = hard -4 = crazy
   const [muted, setMuted] = useState(true);
@@ -99,7 +102,7 @@ function App() {
   }, [isStart]);
 
   useEffect(() => {
-    if (isStart && !reset) {
+    if (isStart && !reset && loaderState) {
       const time = Date.now();
       const interval = setInterval(
         () =>
@@ -109,7 +112,7 @@ function App() {
 
       return () => clearInterval(interval);
     }
-  }, [isStart, reset]);
+  }, [isStart, reset, loaderState]);
 
   useEffect(() => {
     if (reset) {
@@ -119,7 +122,7 @@ function App() {
 
   useEffect(() => {
     if (isStart && !reset && !muted) {
-      audio.bgMusic.play();
+      // audio.bgMusic.play();
     }
     if (isStart && !reset && muted) {
       audio.bgMusic.pause();
@@ -132,8 +135,9 @@ function App() {
     }
   }, [isStart, muted, reset]);
 
-  console.log(muted);
+  // console.log(muted);
 
+  console.log(loaderState);
   return (
     <div className="app">
       {!isStart && (
@@ -152,20 +156,21 @@ function App() {
             0.0
           </h1>
 
-          <Canvas
-            dpr={[1, 2]}
-            // orthographic
-            // camera={{ zoom: 100, position: [0, 0, 100] }}
-          >
+          <Canvas dpr={[1, 2]}>
             <Main>
               <Particles gameDiff={gameDiff} />
             </Main>
             <PerspectiveCamera
-              position={reset ? [0, 6, 0] : [0, 0, 5]}
-              fov={70}
-              makeDefault={reset}
+              position={reset ? [0, 6, 0] : [0, 0, 8]}
+              fov={100}
+              makeDefault={true}
             />
-            <Suspense fallback={null}>
+            <Suspense
+              fallback={
+                // <Loader />
+                null
+              }
+            >
               <Bloom>
                 <Boxes
                   datas={datas}
@@ -173,6 +178,7 @@ function App() {
                   isStart={isStart}
                   reset={reset}
                   gameDiff={gameDiff}
+                  setLoaderState={setLoaderState}
                 />
                 <Lights />
               </Bloom>
@@ -180,6 +186,13 @@ function App() {
             <OrbitControls />
             {glitch && <CameraShake {...cameraShakeCong} />}
           </Canvas>
+          {/* <Loader
+            // dataInterpolation={(p) => `Loading ${p.toFixed(2)}%`}
+            initialState={(active) =>
+              // active ? setLoaderState(true) : setLoaderState(false)
+              console.log(active)
+            }
+          /> */}
         </div>
       )}
       {isStart && !reset && (
