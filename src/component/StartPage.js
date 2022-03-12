@@ -6,20 +6,34 @@ function StartPage({
   gameDiff,
   setMuted,
 }) {
-  const modes = {
-    0: "googeza",
-    1: "goo",
-    2: "jineka",
-    3: "goomesh",
-    4: "verza",
-  };
   // const modes = {
-  //   0: "Zik",
-  //   1: "Michka",
-  //   2: "Sika",
-  //   3: "Ghashnic",
-  //   4: "Tela",
+  //   0: "googeza",
+  //   1: "goo",
+  //   2: "jineka",
+  //   3: "goomesh",
+  //   4: "verza",
   // };
+  // const modes = {
+  //   0: "at rest", // very easy // static
+  //   1: "unhurried", // easy // slow
+  //   2: "jineka", // normal // fast
+  //   3: "goomesh", // hard // very fast
+  //   4: "haste", // very hard // in rush!
+  // };
+  // const modes = {
+  //   0: "fingernail growth", // static
+  //   1: "cockroaches", // slow
+  //   2: "tornado", // fast
+  //   3: "tsunami", // very fast
+  //   4: "bullets", // in rush!
+  // };
+  const modes = {
+    0: "Snail", // static
+    1: "Chicken", // slow
+    2: "Human", // fast
+    3: "Greyhound", // very fast
+    4: "Cheetah", // in rush!
+  };
 
   const handleStart = () => {
     setIsStart(true);

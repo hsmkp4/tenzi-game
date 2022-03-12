@@ -1,10 +1,10 @@
 function EndGame({ handleReset, playerScore, playerName, gameDiff }) {
   const modes = {
-    0: "googeza",
-    1: "goo",
-    2: "jineka",
-    3: "goomesh",
-    4: "verza",
+    0: "Snail", // static
+    1: "Chicken", // slow
+    2: "Human", // fast
+    3: "Greyhound", // very fast
+    4: "Cheetah", // in rush!
   };
   return (
     <div className="endgame">

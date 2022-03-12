@@ -25,11 +25,12 @@ function App() {
   const [glitch, setGlitch] = useState(false);
   const [isStart, setIsStart] = useState(false);
   const [playerName, setPlayerName] = useState(() => {
-    let user = window.localStorage.getItem("playerName");
+    let user = window.localStorage.getItem("name");
+    let initVal = JSON.parse(user);
     if (!user) {
-      user = "";
+      initVal = "";
     }
-    return user;
+    return initVal;
   });
   const [playerScore, setPlayerScore] = useState(0.0);
   const [gameDiff, setGameDiff] = useState(2);
@@ -97,7 +98,7 @@ function App() {
 
   useEffect(() => {
     if (isStart) {
-      window.localStorage.setItem("playerName", playerName);
+      window.localStorage.setItem("name", JSON.stringify(playerName));
     }
   }, [isStart]);
 
