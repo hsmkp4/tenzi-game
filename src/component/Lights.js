@@ -1,8 +1,8 @@
 function Lights() {
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[2, 5, 2]} intensity={2} />
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[2, 2, 4]} intensity={2} />
     </>
   );
 }

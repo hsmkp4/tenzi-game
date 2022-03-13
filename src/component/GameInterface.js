@@ -9,18 +9,22 @@ function GameInterface({
   handleRemake,
   setMuted,
   muted,
+  theme,
 }) {
-  const [isMob, setIsMob] = useState(true);
+  const [isMob, setIsMob] = useState("");
+  const handleResize = () => {
+    if (window.innerWidth < 760) {
+      setIsMob(true);
+    } else {
+      setIsMob(false);
+    }
+  };
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      if (window.innerWidth < 760) {
-        setIsMob(true);
-      } else {
-        setIsMob(false);
-      }
-    });
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log(isMob);
   return (
     <>
       <h1 ref={seconds} className={`game__point ${reset ? "hide" : ""}`}>
@@ -28,7 +32,18 @@ function GameInterface({
       </h1>
       {isStart && !reset && (
         <div>
-          <button className="btn rollbtn" onClick={handleRoll}>
+          <button
+            className={`btn rollbtn ${
+              theme === "blue"
+                ? "b1"
+                : theme === "purple"
+                ? "p1"
+                : theme === "red"
+                ? "r1"
+                : ""
+            }`}
+            onClick={handleRoll}
+          >
             Roll it
           </button>
           <button className="remake" onClick={handleRemake}>

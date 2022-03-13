@@ -6,7 +6,7 @@
   width: 100%;
 }
 .header {
-  padding-top: 1rem;
+  padding-top: 0.8rem;
   padding-bottom: 1rem;
   font-size: 1.8rem;
   font-weight: 700;
@@ -49,7 +49,8 @@
   border-radius: 6px;
 }
 .dice.hold {
-  background-color: orange;
+  /* background-color: orange; */
+  background-color: #dfb452;
 }
 
 .rollbtn {
@@ -265,6 +266,10 @@
   align-items: center;
   gap: 5px;
   transform: rotate(15deg);
+  transition: transform 0.5s;
+}
+.myinfo:hover {
+  transform: rotate(-15deg);
 }
 .myinfo a {
   text-decoration: none;
@@ -287,6 +292,43 @@
 }
 .screenhelper span {
   font-weight: 700;
+}
+
+.themecont {
+  position: fixed;
+  left: -70px;
+  bottom: 11.5%;
+}
+.themecont .circle {
+  width: 100px;
+  height: 30px;
+  /* border-radius: 50%; */
+  background-color: red;
+  margin-bottom: 7px;
+  cursor: pointer;
+}
+.themecont .b1 {
+  background-color: #4682b4;
+  transition: transform 0.5s;
+}
+.themecont .p1 {
+  background-color: #6e1f78;
+  transition: transform 0.5s;
+}
+.themecont .r1 {
+  background-color: #911251;
+  transition: transform 0.5s;
+}
+
+.themecont .active {
+  transform: translateX(20px);
+}
+
+.rollbtn.p1 {
+  background-color: #6e1f78;
+}
+.rollbtn.r1 {
+  background-color: #911251;
 }
 
 @keyframes decColor {
@@ -331,6 +373,9 @@
   }
   .myinfo a {
     font-size: 1rem;
+  }
+  .themecont .active {
+    transform: translateX(40px);
   }
 }
 
@@ -418,5 +463,10 @@
     padding: 2.5rem;
     border-radius: 5px;
     cursor: pointer;
+  }
+  .themecont {
+    position: fixed;
+    left: -70px;
+    bottom: 4.5%;
   }
 }

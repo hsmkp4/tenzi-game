@@ -19,6 +19,7 @@ function MyCanvas({
   reset,
   setLoaderState,
   glitch,
+  theme,
 }) {
   const cameraShakeCong = {
     maxYaw: 1,
@@ -52,6 +53,7 @@ function MyCanvas({
             reset={reset}
             gameDiff={gameDiff}
             setLoaderState={setLoaderState}
+            theme={theme}
           />
           <Lights />
         </Bloom>

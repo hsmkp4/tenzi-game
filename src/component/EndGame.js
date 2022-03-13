@@ -1,4 +1,4 @@
-function EndGame({ handleReset, playerScore, playerName, gameDiff }) {
+function EndGame({ handleReset, playerScore, playerName, gameDiff, theme }) {
   const modes = {
     0: "Snail", // static
     1: "Chicken", // slow
@@ -16,7 +16,18 @@ function EndGame({ handleReset, playerScore, playerName, gameDiff }) {
           you made it in <span>{playerScore}</span> seconds on{" "}
           <span>{modes[gameDiff]}</span> mode 💪
         </h3>
-        <button onClick={handleReset} className=" rollbtn">
+        <button
+          onClick={handleReset}
+          className={`rollbtn ${
+            theme === "blue"
+              ? "b1"
+              : theme === "purple"
+              ? "p1"
+              : theme === "red"
+              ? "r1"
+              : ""
+          }`}
+        >
           Restart
         </button>
       </div>

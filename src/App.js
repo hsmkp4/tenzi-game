@@ -25,6 +25,7 @@ function App() {
   const [gameDiff, setGameDiff] = useState(2);
   const [loaderState, setLoaderState] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [theme, setTheme] = useState("blue");
   const seconds = useRef();
 
   const handleRoll = () => {
@@ -120,6 +121,8 @@ function App() {
           setGameDiff={setGameDiff}
           gameDiff={gameDiff}
           setMuted={setMuted}
+          theme={theme}
+          setTheme={setTheme}
         />
       )}
       {isStart && (
@@ -132,6 +135,7 @@ function App() {
             isStart={isStart}
             reset={reset}
             setLoaderState={setLoaderState}
+            theme={theme}
           />
           <GameInterface
             seconds={seconds}
@@ -141,6 +145,7 @@ function App() {
             handleRemake={handleRemake}
             setMuted={setMuted}
             muted={muted}
+            theme={theme}
           />
         </div>
       )}
@@ -151,6 +156,7 @@ function App() {
           playerScore={playerScore}
           playerName={playerName}
           gameDiff={gameDiff}
+          theme={theme}
         />
       )}
     </div>

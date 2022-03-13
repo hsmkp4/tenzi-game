@@ -19,6 +19,7 @@ export default function Text({
   data,
   reset,
   gameDiff,
+  theme,
   ...props
 }) {
   const [isHover, setIsHover] = useState(false);
@@ -122,11 +123,27 @@ export default function Text({
         ref={mesh}
       >
         <textGeometry args={[children, config]} />
-        <meshStandardMaterial
-          color={data.isHold ? "orange" : isHover ? "red" : "steelblue"}
-          metalness={0.4}
-          roughness={0.1}
-        />
+        {theme === "blue" && (
+          <meshStandardMaterial
+            color={data.isHold ? "#dfb452" : isHover ? "#c34" : "#4682b4"}
+            metalness={0.4}
+            roughness={0.1}
+          />
+        )}
+        {theme === "purple" && (
+          <meshStandardMaterial
+            color={data.isHold ? "#e45e8f" : isHover ? "#252150" : "#6e1f78"}
+            metalness={0.4}
+            roughness={0.1}
+          />
+        )}
+        {theme === "red" && (
+          <meshStandardMaterial
+            color={data.isHold ? "#d1cbb5" : isHover ? "#534e4e" : "#911251"}
+            metalness={0.4}
+            roughness={0.1}
+          />
+        )}
       </a.mesh>
     </group>
   );

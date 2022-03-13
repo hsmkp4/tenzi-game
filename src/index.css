@@ -10,7 +10,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(15, 15, 15);
+  background-color: #0f0f0f;
   /* background-color: #111; */
   color: white;
   font-family: "Source Code Pro", monospace;

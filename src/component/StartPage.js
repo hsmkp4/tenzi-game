@@ -5,6 +5,8 @@ function StartPage({
   setGameDiff,
   gameDiff,
   setMuted,
+  theme,
+  setTheme,
 }) {
   const modes = {
     0: "Snail", // static
@@ -44,7 +46,18 @@ function StartPage({
           value={playerName}
           placeholder="nickname"
         />
-        <button className="rollbtn" onClick={handleStart}>
+        <button
+          className={`rollbtn ${
+            theme === "blue"
+              ? "b1"
+              : theme === "purple"
+              ? "p1"
+              : theme === "red"
+              ? "r1"
+              : ""
+          }`}
+          onClick={handleStart}
+        >
           Lets Go!!
         </button>
       </div>
@@ -82,6 +95,20 @@ function StartPage({
             {modes[4]}
           </div>
         </div>
+      </div>
+      <div className="themecont">
+        <div
+          className={`circle b1 ${theme === "blue" ? "active" : ""}`}
+          onClick={() => setTheme("blue")}
+        ></div>
+        <div
+          className={`circle p1 ${theme === "purple" ? "active" : ""}`}
+          onClick={() => setTheme("purple")}
+        ></div>
+        <div
+          className={`circle r1 ${theme === "red" ? "active" : ""}`}
+          onClick={() => setTheme("red")}
+        ></div>
       </div>
     </div>
   );
