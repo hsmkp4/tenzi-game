@@ -23,8 +23,9 @@ function StartPage({
       <h1 className="header">TENZI</h1>
       <div className="container">
         <h2 className="subheader">
-          Be the fastest player to make all numbers show the same number. you
-          can click on numbers to prevent change number after roll. Good Luck!
+          Be the fastest player to make all the numbers show the same number.
+          You can click on numbers to prevent them from changing after the roll.
+          Good Luck!
         </h2>
       </div>
       <div className="form__name">

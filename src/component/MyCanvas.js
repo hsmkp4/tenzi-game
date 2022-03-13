@@ -32,13 +32,14 @@ function MyCanvas({
     decayRate: 0.75,
     additive: true,
   };
+
   return (
     <Canvas dpr={[1, 2]}>
       <Main>
         <Particles gameDiff={gameDiff} />
       </Main>
       <PerspectiveCamera
-        position={reset ? [0, 6, 0] : [0, 0, 8]}
+        position={reset ? [0, 6, 0] : [0, 0, 7]}
         fov={100}
         makeDefault={true}
       />

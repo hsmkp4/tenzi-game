@@ -83,18 +83,22 @@ export default function Text({
       textG.current.rotation.z = Math.cos(elapsed * randomNum * 2);
       textG.current.position.y = pos[1] + 1 - Math.sin(t * 3);
     }
+
     if (!data.isHold && !reset && gameDiff === 3) {
       textG.current.rotation.y = Math.sin(elapsed * randomNum * t);
       textG.current.rotation.z = Math.cos(elapsed * randomNum * 2 * t);
+      textG.current.position.x = pos[0] - randomNum - Math.sin(t * 5);
       textG.current.position.y = pos[1] + 1 - Math.sin(t * 5);
     }
     if (!data.isHold && !reset && gameDiff === 4) {
-      textG.current.rotation.y = Math.sin(elapsed * randomNum * t);
-      textG.current.rotation.x = Math.sin(elapsed * randomNum * t * t) * 10;
+      textG.current.rotation.y =
+        Math.sin(elapsed * randomNum * t) * 10 * randomNum;
+      textG.current.rotation.x = Math.sin(elapsed * randomNum * t) * randomNum;
       textG.current.rotation.z = Math.cos(elapsed * randomNum * 2 * t) * t;
-      textG.current.position.y = pos[1] + 1 - Math.sin(t * 2);
-      textG.current.position.x = pos[0] + 1 - Math.sin(randomNum * t);
-      textG.current.position.z = pos[2] + 1 - Math.sin(randomNum * t);
+      textG.current.position.x =
+        pos[0] - randomNum - Math.sin(randomNum * t) * 3;
+      textG.current.position.y = pos[1] - randomNum + 1 - Math.sin(t * 2) * 2;
+      textG.current.position.z = pos[2] - randomNum - Math.sin(randomNum * t);
     }
     if (reset) {
       textG.current.position.y -= randomNum / 20;
