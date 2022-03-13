@@ -27,6 +27,14 @@ function StartPage({
           You can click on numbers to prevent them from changing after the roll.
           Good Luck!
         </h2>
+        <div className="myinfo">
+          <a href="https://github.com/hsmkp4/tenzi-game" target="_blank">
+            Github
+          </a>
+          <a href="https://twitter.com/hsmkp4" target="_blank">
+            Twitter
+          </a>
+        </div>
       </div>
       <div className="form__name">
         <input

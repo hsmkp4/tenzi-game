@@ -6,6 +6,7 @@ import EndGame from "./component/EndGame";
 import * as audio from "./audio";
 import MyCanvas from "./component/MyCanvas";
 import GameInterface from "./component/GameInterface";
+import { useThree } from "@react-three/fiber";
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
@@ -96,7 +97,7 @@ function App() {
 
   useEffect(() => {
     if (isStart && !reset && !muted) {
-      // audio.bgMusic.play();
+      audio.bgMusic.play();
     }
     if (isStart && !reset && muted) {
       audio.bgMusic.pause();

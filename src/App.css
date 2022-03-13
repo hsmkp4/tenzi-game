@@ -16,6 +16,7 @@
 }
 .container {
   /* margin: -0.7rem; */
+  position: relative;
   border: 1px solid black;
   padding: 1rem;
   width: 90%;
@@ -251,12 +252,49 @@
   background-color: #c34;
 }
 
+.myinfo {
+  position: absolute;
+  top: 80%;
+  left: 3%;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1c1d;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  transform: rotate(15deg);
+}
+.myinfo a {
+  text-decoration: none;
+  color: #dfb452;
+  cursor: pointer;
+  font-size: 0.7rem;
+}
+.myinfo a:hover {
+  color: white;
+}
+.screenhelper {
+  position: fixed;
+  right: 1%;
+  bottom: 1%;
+  z-index: 81;
+}
+.screenhelper p {
+  font-size: 0.6rem;
+  font-weight: 100;
+}
+.screenhelper span {
+  font-weight: 700;
+}
+
 @keyframes decColor {
   0% {
-    text-decoration-color: #c34;
+    text-decoration-color: #cc3344;
   }
   100% {
-    text-decoration-color: steelblue;
+    text-decoration-color: #4682b4;
   }
 }
 
@@ -285,6 +323,14 @@
   }
   .form__name button {
     width: 100%;
+  }
+  .myinfo {
+    top: 80%;
+    left: 6%;
+    padding: 0.8rem 1.5rem;
+  }
+  .myinfo a {
+    font-size: 1rem;
   }
 }
 
