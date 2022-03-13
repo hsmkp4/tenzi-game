@@ -1,23 +1,11 @@
-import {
-  CameraShake,
-  // Loader,
-  OrbitControls,
-  PerspectiveCamera,
-} from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import Bloom from "./component/Bloom";
-import Boxes from "./component/Boxes";
-import Lights from "./component/Lights";
 import DUMMY from "./data";
-import { useSpring, a } from "@react-spring/three";
 import StartPage from "./component/StartPage";
-import Main from "./component/Main";
-import Particles from "./component/Particles";
 import EndGame from "./component/EndGame";
 import * as audio from "./audio";
-import Loader from "./component/Loader";
+import MyCanvas from "./component/MyCanvas";
+import GameInterface from "./GameInterface";
 
 function App() {
   const [datas, setDatas] = useState(DUMMY);
@@ -35,8 +23,6 @@ function App() {
   const [playerScore, setPlayerScore] = useState(0.0);
   const [gameDiff, setGameDiff] = useState(2);
   const [loaderState, setLoaderState] = useState(false);
-  // console.log(gameDiff);
-  // 0 = ea pa -1 = easy -2 = normal-3 = hard -4 = crazy
   const [muted, setMuted] = useState(true);
   const seconds = useRef();
 
@@ -47,7 +33,7 @@ function App() {
         : { ...data, diceNum: Math.floor(Math.random() * 6 + 1) }
     );
     setGlitch(true);
-    audio.roolMusic.play();
+    audio.roolMusic2.play();
     setDatas(newData);
   };
 
@@ -83,19 +69,6 @@ function App() {
     };
   }, [glitch]);
 
-  const cameraShakeCong = {
-    maxYaw: 1,
-    maxPitch: 1,
-    maxRoll: 1,
-    yawFrequency: 100,
-    pitchFrequency: 100,
-    rollFrequency: 100,
-    intensity: 1,
-    decay: true,
-    decayRate: 0.75,
-    additive: true,
-  };
-
   useEffect(() => {
     if (isStart) {
       window.localStorage.setItem("name", JSON.stringify(playerName));
@@ -123,7 +96,7 @@ function App() {
 
   useEffect(() => {
     if (isStart && !reset && !muted) {
-      // audio.bgMusic.play();
+      audio.bgMusic.play();
     }
     if (isStart && !reset && muted) {
       audio.bgMusic.pause();
@@ -136,9 +109,6 @@ function App() {
     }
   }, [isStart, muted, reset]);
 
-  // console.log(muted);
-
-  console.log(loaderState);
   return (
     <div className="app">
       {!isStart && (
@@ -153,60 +123,24 @@ function App() {
       )}
       {isStart && (
         <div className="game__canvas">
-          <h1 ref={seconds} className={`game__point ${reset ? "hide" : ""}`}>
-            0.0
-          </h1>
-
-          <Canvas dpr={[1, 2]}>
-            <Main>
-              <Particles gameDiff={gameDiff} />
-            </Main>
-            <PerspectiveCamera
-              position={reset ? [0, 6, 0] : [0, 0, 8]}
-              fov={100}
-              makeDefault={true}
-            />
-            <Suspense
-              fallback={
-                // <Loader />
-                null
-              }
-            >
-              <Bloom>
-                <Boxes
-                  datas={datas}
-                  handleHoldDice={handleHoldDice}
-                  isStart={isStart}
-                  reset={reset}
-                  gameDiff={gameDiff}
-                  setLoaderState={setLoaderState}
-                />
-                <Lights />
-              </Bloom>
-            </Suspense>
-            <OrbitControls />
-            {glitch && <CameraShake {...cameraShakeCong} />}
-          </Canvas>
-          {/* <Loader
-            // dataInterpolation={(p) => `Loading ${p.toFixed(2)}%`}
-            initialState={(active) =>
-              // active ? setLoaderState(true) : setLoaderState(false)
-              console.log(active)
-            }
-          /> */}
-        </div>
-      )}
-      {isStart && !reset && (
-        <div>
-          <button className="btn rollbtn" onClick={handleRoll}>
-            Roll it
-          </button>
-          <button className="remake" onClick={handleRemake}>
-            Remake
-          </button>
-          <button className="mute" onClick={() => setMuted((prv) => !prv)}>
-            {muted ? "unmute" : "mute"}
-          </button>
+          <MyCanvas
+            gameDiff={gameDiff}
+            glitch={glitch}
+            datas={datas}
+            handleHoldDice={handleHoldDice}
+            isStart={isStart}
+            reset={reset}
+            setLoaderState={setLoaderState}
+          />
+          <GameInterface
+            seconds={seconds}
+            reset={reset}
+            isStart={isStart}
+            handleRoll={handleRoll}
+            handleRemake={handleRemake}
+            setMuted={setMuted}
+            muted={muted}
+          />
         </div>
       )}
 

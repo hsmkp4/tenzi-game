@@ -1,10 +1,10 @@
-import * as THREE from "three";
 import { useMemo, useRef, useLayoutEffect, useState } from "react";
 import { extend, useFrame, useLoader } from "@react-three/fiber";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import boldUrl from "./bold.bolb";
 import { useSpring, a } from "@react-spring/three";
+import { Vector3 } from "three";
 
 extend({ TextGeometry });
 
@@ -58,7 +58,7 @@ export default function Text({
     [font]
   );
   useLayoutEffect(() => {
-    const size = new THREE.Vector3();
+    const size = new Vector3();
     mesh.current.geometry.computeBoundingBox();
     mesh.current.geometry.boundingBox.getSize(size);
     mesh.current.position.x =
