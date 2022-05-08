@@ -33,9 +33,6 @@ function StartPage({
           <a href="https://github.com/hsmkp4/tenzi-game" target="_blank">
             Github
           </a>
-          <a href="https://twitter.com/hsmkp4" target="_blank">
-            Twitter
-          </a>
         </div>
       </div>
       <div className="form__name">
@@ -58,7 +55,7 @@ function StartPage({
           }`}
           onClick={handleStart}
         >
-          Lets Go!!
+          Let's Go!!
         </button>
       </div>
       <div className="game__mode">

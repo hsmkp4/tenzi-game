@@ -26,7 +26,7 @@ function GameInterface({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
-    <>
+    <div>
       <h1 ref={seconds} className={`game__point ${reset ? "hide" : ""}`}>
         0.0
       </h1>
@@ -54,27 +54,28 @@ function GameInterface({
           </button>
         </div>
       )}
-      {!isMob ? (
-        <div className="screenhelper">
-          <p>
-            * hold <span>left click</span> and move it to orbit in scene,
-          </p>
-          <p>
-            * you can zoom in and out with <span>scroll wheel,</span>
-          </p>
-          <p>
-            * <span>shift</span> plus <span>left click </span>
-            for span.
-          </p>
-        </div>
-      ) : (
-        <div className="screenhelper">
-          <p>
-            * you can <span>rotate</span> in scene
-          </p>
-        </div>
-      )}
-    </>
+      {!reset &&
+        (!isMob ? (
+          <div className="screenhelper">
+            <p>
+              * hold <span>left click</span> and move it to orbit in scene,
+            </p>
+            <p>
+              * you can zoom in and out with <span>scroll wheel,</span>
+            </p>
+            <p>
+              * <span>Right click </span>
+              for span.
+            </p>
+          </div>
+        ) : (
+          <div className="screenhelper">
+            <p>
+              * you can <span>rotate</span> in game scene
+            </p>
+          </div>
+        ))}
+    </div>
   );
 }
 
